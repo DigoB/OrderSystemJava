@@ -2,17 +2,18 @@ package br.com.rodrigobraz.OrderSystemJava;
 
 import br.com.rodrigobraz.OrderSystemJava.controllers.City;
 import br.com.rodrigobraz.OrderSystemJava.controllers.State;
+import br.com.rodrigobraz.OrderSystemJava.entities.Address;
 import br.com.rodrigobraz.OrderSystemJava.entities.Category;
+import br.com.rodrigobraz.OrderSystemJava.entities.Customer;
 import br.com.rodrigobraz.OrderSystemJava.entities.Product;
-import br.com.rodrigobraz.OrderSystemJava.repositories.CategoryRepository;
-import br.com.rodrigobraz.OrderSystemJava.repositories.CityRepository;
-import br.com.rodrigobraz.OrderSystemJava.repositories.ProductRepository;
-import br.com.rodrigobraz.OrderSystemJava.repositories.StateRepository;
+import br.com.rodrigobraz.OrderSystemJava.entities.enums.CustomerType;
+import br.com.rodrigobraz.OrderSystemJava.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,12 @@ public class OrderSystemJavaApplication implements CommandLineRunner {
 
 	@Autowired
 	private CityRepository cityRepository;
+
+	@Autowired
+	private CustomerRepository customerRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrderSystemJavaApplication.class, args);
@@ -68,6 +75,34 @@ public class OrderSystemJavaApplication implements CommandLineRunner {
 
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+
+		Customer customer1 = new Customer(null,
+				"Maria Silva",
+				"maria@gmail.com",
+				"36378912377",
+				CustomerType.NATURAL_PERSON);
+		customer1.getPhoneNumbers().addAll(Arrays.asList("27363323", "993838393"));
+
+		Address address1 = new Address(null,
+				"Rua Flores",
+				"300",
+				"Apto 203",
+				"Jardim",
+				"38220834",
+				customer1, city1);
+
+		Address address2 = new Address(null,
+				"Avenida Matos",
+				"105",
+				"Sala 800",
+				"Centro",
+				"38777012",
+				customer1, city2);
+
+		customer1.getAddresses().addAll(Arrays.asList(address1, address2));
+
+		customerRepository.saveAll(Arrays.asList(customer1));
+		addressRepository.saveAll(Arrays.asList(address1, address2));
 
 	}
 }
