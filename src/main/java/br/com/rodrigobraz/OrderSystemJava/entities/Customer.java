@@ -1,6 +1,7 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.CustomerType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -16,6 +17,7 @@ public class Customer {
     private String document;
     private Integer customerType;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 

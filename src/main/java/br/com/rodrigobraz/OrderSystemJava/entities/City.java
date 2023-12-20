@@ -1,5 +1,6 @@
-package br.com.rodrigobraz.OrderSystemJava.controllers;
+package br.com.rodrigobraz.OrderSystemJava.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -12,6 +13,7 @@ public class City {
     private Integer id;
     private String name;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "STATE_ID")
     private State state;

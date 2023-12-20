@@ -1,6 +1,6 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
-import br.com.rodrigobraz.OrderSystemJava.controllers.City;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -17,6 +17,7 @@ public class Address {
     private String neighborhood;
     private String zipCode;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;

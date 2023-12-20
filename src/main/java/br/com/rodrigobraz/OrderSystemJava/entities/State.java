@@ -1,5 +1,6 @@
-package br.com.rodrigobraz.OrderSystemJava.controllers;
+package br.com.rodrigobraz.OrderSystemJava.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class State {
     private Integer id;
     private String name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "state")
     private List<City> cities = new ArrayList<>();
 

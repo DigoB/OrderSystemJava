@@ -1,7 +1,7 @@
 package br.com.rodrigobraz.OrderSystemJava;
 
-import br.com.rodrigobraz.OrderSystemJava.controllers.City;
-import br.com.rodrigobraz.OrderSystemJava.controllers.State;
+import br.com.rodrigobraz.OrderSystemJava.entities.City;
+import br.com.rodrigobraz.OrderSystemJava.entities.State;
 import br.com.rodrigobraz.OrderSystemJava.entities.Address;
 import br.com.rodrigobraz.OrderSystemJava.entities.Category;
 import br.com.rodrigobraz.OrderSystemJava.entities.Customer;
@@ -13,10 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class OrderSystemJavaApplication implements CommandLineRunner {
