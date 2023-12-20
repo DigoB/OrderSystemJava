@@ -1,5 +1,6 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class Product implements Serializable {
     private String name;
     private Double price;
 
+    @JsonBackReference
     @ManyToMany
     @JoinTable(name = "PRODUCT_CATEGORY",
             joinColumns = @JoinColumn(name = "product_id"),

@@ -1,6 +1,7 @@
 package br.com.rodrigobraz.OrderSystemJava.services;
 
 import br.com.rodrigobraz.OrderSystemJava.entities.Category;
+import br.com.rodrigobraz.OrderSystemJava.exceptions.ObjectNotFoundException;
 import br.com.rodrigobraz.OrderSystemJava.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,8 @@ public class CategoryService {
 
     public Category getCategoryById(Integer id) {
         Optional<Category> category = repository.findById(id);
-        return category.orElse(null);
+        return category.orElseThrow(() -> new ObjectNotFoundException(
+                "Category not found! Id: " + id + ", Type: " + Category.class.getName()));
     }
 
 }
