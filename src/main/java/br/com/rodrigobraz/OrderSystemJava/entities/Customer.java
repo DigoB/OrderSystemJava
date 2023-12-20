@@ -25,6 +25,9 @@ public class Customer {
     @CollectionTable(name = "PHONE_NUMBER")
     private Set<String> phoneNumbers = new HashSet<>();
 
+    @OneToMany(mappedBy = "customer")
+    private List<OrderBuy> orderBuys = new ArrayList<>();
+
     public Customer() {
     }
 
@@ -91,6 +94,18 @@ public class Customer {
 
     public void setPhoneNumbers(Set<String> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
+    }
+
+    public List<OrderBuy> getOrders() {
+        return orderBuys;
+    }
+
+    public void setOrders(List<OrderBuy> orderBuys) {
+        this.orderBuys = orderBuys;
     }
 
     @Override

@@ -1,18 +1,15 @@
 package br.com.rodrigobraz.OrderSystemJava;
 
-import br.com.rodrigobraz.OrderSystemJava.entities.City;
-import br.com.rodrigobraz.OrderSystemJava.entities.State;
-import br.com.rodrigobraz.OrderSystemJava.entities.Address;
-import br.com.rodrigobraz.OrderSystemJava.entities.Category;
-import br.com.rodrigobraz.OrderSystemJava.entities.Customer;
-import br.com.rodrigobraz.OrderSystemJava.entities.Product;
+import br.com.rodrigobraz.OrderSystemJava.entities.*;
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.CustomerType;
+import br.com.rodrigobraz.OrderSystemJava.entities.enums.PaymentStatus;
 import br.com.rodrigobraz.OrderSystemJava.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -35,6 +32,12 @@ public class OrderSystemJavaApplication implements CommandLineRunner {
 
 	@Autowired
 	private AddressRepository addressRepository;
+
+	@Autowired
+	private OrderBuyRepository orderBuyRepository;
+
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrderSystemJavaApplication.class, args);
@@ -100,6 +103,32 @@ public class OrderSystemJavaApplication implements CommandLineRunner {
 
 		customerRepository.saveAll(Arrays.asList(customer1));
 		addressRepository.saveAll(Arrays.asList(address1, address2));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		OrderBuy order1 = new OrderBuy(null,
+				sdf.parse("30/09/2017 10:32"),
+				customer1, address1);
+
+		OrderBuy order2 = new OrderBuy(null,
+				sdf.parse("10/10/2017 12:00"),
+				customer1, address2);
+
+		Payment payment1 = new CardPayment(null,
+				PaymentStatus.FINISHED, order1, 6);
+
+		order1.setPayment(payment1);
+
+		Payment payment2 = new TicketPayment(null,
+				PaymentStatus.PENDING, order2, sdf.parse("20/10/2017 00:00"),
+				null);
+
+		order2.setPayment(payment2);
+
+		customer1.getOrders().addAll(Arrays.asList(order1, order2));
+
+		orderBuyRepository.saveAll(Arrays.asList(order1, order2));
+		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 
 	}
 }
