@@ -39,6 +39,9 @@ public class OrderSystemJavaApplication implements CommandLineRunner {
 	@Autowired
 	private PaymentRepository paymentRepository;
 
+	@Autowired
+	private OrderItemRepository itemRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(OrderSystemJavaApplication.class, args);
 	}
@@ -46,22 +49,22 @@ public class OrderSystemJavaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Category cat1 = new Category(null, "IT");
-		Category cat2 = new Category(null, "Office");
+		Category category1 = new Category(null, "IT");
+		Category category2 = new Category(null, "Office");
 
-		Product p1 = new Product(null, "Computer", 2000.00);
-		Product p2 = new Product(null, "Printer", 800.00);
-		Product p3 = new Product(null, "Mouse", 80.00);
+		Product product1 = new Product(null, "Computer", 2000.00);
+		Product product2 = new Product(null, "Printer", 800.00);
+		Product product3 = new Product(null, "Mouse", 80.00);
 
-		cat1.getProducts().addAll(Arrays.asList(p1, p2, p3));
-		cat2.getProducts().addAll(Arrays.asList(p2));
+		category1.getProducts().addAll(Arrays.asList(product1, product2, product3));
+		category2.getProducts().addAll(Arrays.asList(product2));
 
-		p1.getCategories().addAll(Arrays.asList(cat1));
-		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
-		p3.getCategories().addAll(Arrays.asList(cat1));
+		product1.getCategories().addAll(Arrays.asList(category1));
+		product2.getCategories().addAll(Arrays.asList(category1, category2));
+		product3.getCategories().addAll(Arrays.asList(category1));
 
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
-		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		categoryRepository.saveAll(Arrays.asList(category1, category2));
+		productRepository.saveAll(Arrays.asList(product1, product2, product3));
 
 		State state1 = new State(null, "Minas Gerais");
 		State state2 = new State(null,"São Paulo");
@@ -129,6 +132,19 @@ public class OrderSystemJavaApplication implements CommandLineRunner {
 
 		orderBuyRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
+
+		OrderItem item1 = new OrderItem(order1, product1, 0.00, 1, 2000.00);
+		OrderItem item2 = new OrderItem(order1, product3, 0.00, 2, 80.00);
+		OrderItem item3 = new OrderItem(order2, product2, 100.00, 1, 800.00);
+
+		order1.getOrderItems().addAll(Arrays.asList(item1, item2));
+		order2.getOrderItems().addAll(Arrays.asList(item3));
+
+		product1.getOrderItems().addAll(Arrays.asList(item1));
+		product2.getOrderItems().addAll(Arrays.asList(item3));
+		product3.getOrderItems().addAll(Arrays.asList(item2));
+
+		itemRepository.saveAll(Arrays.asList(item1, item2, item3));
 
 	}
 }
