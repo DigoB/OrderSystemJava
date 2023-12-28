@@ -1,5 +1,6 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -15,6 +16,8 @@ public class OrderBuy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date timestamp;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orderBuy")

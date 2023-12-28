@@ -1,6 +1,5 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -9,13 +8,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Category {
+public class Category implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "categories")
     private List<Product> products = new ArrayList<>();
 

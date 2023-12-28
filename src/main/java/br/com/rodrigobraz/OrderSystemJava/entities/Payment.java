@@ -1,19 +1,23 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Payment {
+public abstract class Payment implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     private Integer id;
     private Integer status;
 
     // Faz com que o Id do pagamento seja o mesmo Id do pedido
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "ORDER_ID")
     @MapsId

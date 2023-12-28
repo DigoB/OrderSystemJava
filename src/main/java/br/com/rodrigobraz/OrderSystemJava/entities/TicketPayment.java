@@ -1,6 +1,7 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 
 import java.util.Date;
@@ -8,7 +9,10 @@ import java.util.Date;
 @Entity
 public class TicketPayment extends Payment {
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dueDate;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date paymentDate;
 
     public TicketPayment() {}

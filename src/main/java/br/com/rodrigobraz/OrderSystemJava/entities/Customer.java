@@ -1,13 +1,15 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.CustomerType;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Customer {
+public class Customer implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +19,6 @@ public class Customer {
     private String document;
     private Integer customerType;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses = new ArrayList<>();
 
@@ -25,6 +26,7 @@ public class Customer {
     @CollectionTable(name = "PHONE_NUMBER")
     private Set<String> phoneNumbers = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<OrderBuy> orderBuys = new ArrayList<>();
 

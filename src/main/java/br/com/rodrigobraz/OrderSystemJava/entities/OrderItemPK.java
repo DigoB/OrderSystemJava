@@ -7,13 +7,10 @@ import jakarta.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 
+// Classe auxiliar para identificar os itens do pedido
 @Embeddable
 public class OrderItemPK implements Serializable {
-
     private static final long serialversionUID = 1L;
-
-
-    // Classe auxiliar para identificar os itens do pedido
 
     @ManyToOne
     @JoinColumn(name = "ORDER_ID")
