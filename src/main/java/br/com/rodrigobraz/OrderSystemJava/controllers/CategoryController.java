@@ -7,6 +7,7 @@ import br.com.rodrigobraz.OrderSystemJava.repositories.CategoryRepository;
 import br.com.rodrigobraz.OrderSystemJava.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -59,6 +60,19 @@ public class CategoryController {
         List<Category> categories = categoryService.findAll();
         List<CategoryDTO> listDTO = categories.stream().map(CategoryDTO::new).toList();
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<CategoryDTO>> findPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+
+        Page<Category> list =  categoryService.findPage(page, linesPerPage, orderBy, direction);
+        Page<CategoryDTO> listDto = list.map(CategoryDTO::new);
+
+        return ResponseEntity.ok().body(listDto);
     }
 
 }
