@@ -5,6 +5,7 @@ import br.com.rodrigobraz.OrderSystemJava.entities.Category;
 import br.com.rodrigobraz.OrderSystemJava.exceptions.DataIntegrityException;
 import br.com.rodrigobraz.OrderSystemJava.repositories.CategoryRepository;
 import br.com.rodrigobraz.OrderSystemJava.services.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -33,7 +34,8 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insertCategory(@RequestBody Category category) {
+    public ResponseEntity<Void> insertCategory(@Valid @RequestBody CategoryDTO dto) {
+        Category category = categoryService.fromDTO(dto);
         category = categoryService.createCategory(category);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(category.getId()).toUri();
@@ -41,7 +43,8 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateCategory(@RequestBody Category category, @PathVariable Integer id) {
+    public ResponseEntity<Void> updateCategory(@Valid @RequestBody CategoryDTO dto, @PathVariable Integer id) {
+        Category category = categoryService.fromDTO(dto);
         category.setId(id);
         category = categoryService.updateCategory(category);
         return ResponseEntity.noContent().build();

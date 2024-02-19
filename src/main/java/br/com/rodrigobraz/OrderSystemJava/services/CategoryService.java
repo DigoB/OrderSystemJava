@@ -1,5 +1,6 @@
 package br.com.rodrigobraz.OrderSystemJava.services;
 
+import br.com.rodrigobraz.OrderSystemJava.dto.CategoryDTO;
 import br.com.rodrigobraz.OrderSystemJava.entities.Category;
 import br.com.rodrigobraz.OrderSystemJava.exceptions.DataIntegrityException;
 import br.com.rodrigobraz.OrderSystemJava.exceptions.ObjectNotFoundException;
@@ -53,5 +54,9 @@ public class CategoryService {
     public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repository.findAll(pageRequest);
+    }
+
+    public Category fromDTO(CategoryDTO categoryDTO) {
+        return new Category(categoryDTO.getId(), categoryDTO.getName());
     }
 }
