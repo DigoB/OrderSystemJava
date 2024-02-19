@@ -16,20 +16,20 @@ public abstract class Payment implements Serializable {
     private Integer id;
     private Integer status;
 
-    // Faz com que o Id do pagamento seja o mesmo Id do pedido
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "ORDER_ID")
+    @JoinColumn(name="order_id")
     @MapsId
-    private OrderBuy orderBuy;
+    private PurchaseOrder order;
 
     public Payment() {
     }
 
-    public Payment(Integer id, PaymentStatus status, OrderBuy orderBuy) {
+    public Payment(Integer id, PaymentStatus status, PurchaseOrder order) {
+        super();
         this.id = id;
         this.status = status.getCode();
-        this.orderBuy = orderBuy;
+        this.order = order;
     }
 
     public Integer getId() {
@@ -48,12 +48,12 @@ public abstract class Payment implements Serializable {
         this.status = status.getCode();
     }
 
-    public OrderBuy getOrder() {
-        return orderBuy;
+    public PurchaseOrder getOrder() {
+        return order;
     }
 
-    public void setOrder(OrderBuy orderBuy) {
-        this.orderBuy = orderBuy;
+    public void setOrder(PurchaseOrder order) {
+        this.order = order;
     }
 
     @Override

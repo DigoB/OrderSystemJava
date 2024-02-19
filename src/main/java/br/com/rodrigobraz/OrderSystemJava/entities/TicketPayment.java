@@ -8,19 +8,21 @@ import java.util.Date;
 
 @Entity
 public class TicketPayment extends Payment {
+    private static final long serialVersionUID = 1L;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date dueDate;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date paymentDate;
 
-    public TicketPayment() {}
+    public TicketPayment() {
+    }
 
-    public TicketPayment(Integer id, PaymentStatus status, OrderBuy orderBuy, Date dueDate, Date paymentDate) {
-        super(id, status, orderBuy);
-        this.dueDate = dueDate;
+    public TicketPayment(Integer id, PaymentStatus status, PurchaseOrder order, Date dueDate, Date paymentDate) {
+        super(id, status, order);
         this.paymentDate = paymentDate;
+        this.dueDate = dueDate;
     }
 
     public Date getDueDate() {

@@ -12,33 +12,34 @@ public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String email;
     private String document;
-    private Integer customerType;
+    private Integer type;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy="customer")
     private List<Address> addresses = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "PHONE_NUMBER")
+    @CollectionTable(name="PHONE_NUMBER")
     private Set<String> phoneNumbers = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "customer")
-    private List<OrderBuy> orderBuys = new ArrayList<>();
+    @OneToMany(mappedBy="customer")
+    private List<PurchaseOrder> orders = new ArrayList<>();
 
     public Customer() {
     }
 
-    public Customer(Integer id, String name, String email, String document, CustomerType customerType) {
+    public Customer(Integer id, String name, String email, String document, CustomerType type) {
+        super();
         this.id = id;
         this.name = name;
         this.email = email;
         this.document = document;
-        this.customerType = customerType.getCode();
+        this.type = type.getCode();
     }
 
     public Integer getId() {
@@ -73,13 +74,12 @@ public class Customer implements Serializable {
         this.document = document;
     }
 
-    // Implementacao para tratar o tipo cliente atraves do código
-    public CustomerType getCustomerType() {
-        return CustomerType.toEnum(customerType);
+    public CustomerType getType() {
+        return CustomerType.toEnum(type);
     }
 
-    public void setCustomerType(CustomerType customerType) {
-        this.customerType = customerType.getCode();
+    public void setType(CustomerType type) {
+        this.type = type.getCode();
     }
 
     public List<Address> getAddresses() {
@@ -98,16 +98,12 @@ public class Customer implements Serializable {
         this.phoneNumbers = phoneNumbers;
     }
 
-    public void setCustomerType(Integer customerType) {
-        this.customerType = customerType;
+    public List<PurchaseOrder> getOrders() {
+        return orders;
     }
 
-    public List<OrderBuy> getOrders() {
-        return orderBuys;
-    }
-
-    public void setOrders(List<OrderBuy> orderBuys) {
-        this.orderBuys = orderBuys;
+    public void setOrders(List<PurchaseOrder> orders) {
+        this.orders = orders;
     }
 
     @Override

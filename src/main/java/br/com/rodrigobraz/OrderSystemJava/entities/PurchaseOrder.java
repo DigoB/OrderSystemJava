@@ -10,34 +10,35 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class OrderBuy implements Serializable {
+public class PurchaseOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date timestamp;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orderBuy")
+    @OneToOne(cascade=CascadeType.ALL, mappedBy="order")
     private Payment payment;
 
     @ManyToOne
-    @JoinColumn(name = "CUSTOMER_ID")
+    @JoinColumn(name="customer_id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "DELIVERY_ADDRESS_ID")
+    @JoinColumn(name="delivery_address_id")
     private Address deliveryAddress;
 
-    @OneToMany(mappedBy = "id.orderBuy")
-    private Set<OrderItem> orderItems = new HashSet<>();
+    @OneToMany(mappedBy="id.order")
+    private Set<OrderItem> itens = new HashSet<>();
 
-    public OrderBuy() {
+    public PurchaseOrder() {
     }
 
-    public OrderBuy(Integer id, Date timestamp, Customer customer, Address deliveryAddress) {
+    public PurchaseOrder(Integer id, Date timestamp, Customer customer, Address deliveryAddress) {
+        super();
         this.id = id;
         this.timestamp = timestamp;
         this.customer = customer;
@@ -84,20 +85,20 @@ public class OrderBuy implements Serializable {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
+    public Set<OrderItem> getItems() {
+        return itens;
     }
 
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setItens(Set<OrderItem> itens) {
+        this.itens = itens;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderBuy orderBuy = (OrderBuy) o;
-        return Objects.equals(id, orderBuy.id);
+        PurchaseOrder purchaseOrder = (PurchaseOrder) o;
+        return Objects.equals(id, purchaseOrder.id);
     }
 
     @Override

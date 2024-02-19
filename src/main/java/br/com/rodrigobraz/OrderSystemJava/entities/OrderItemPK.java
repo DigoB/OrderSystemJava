@@ -10,28 +10,25 @@ import java.util.Objects;
 // Classe auxiliar para identificar os itens do pedido
 @Embeddable
 public class OrderItemPK implements Serializable {
-    private static final long serialversionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @ManyToOne
-    @JoinColumn(name = "ORDER_ID")
-    private OrderBuy orderBuy;
+    @JoinColumn(name="order_id")
+    private PurchaseOrder order;
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID")
+    @JoinColumn(name="product_id")
     private Product product;
 
-    public OrderBuy getOrderBuy() {
-        return orderBuy;
+    public PurchaseOrder getOrder() {
+        return order;
     }
-
-    public void setOrderBuy(OrderBuy orderBuy) {
-        this.orderBuy = orderBuy;
+    public void setOrder(PurchaseOrder order) {
+        this.order = order;
     }
-
     public Product getProduct() {
         return product;
     }
-
     public void setProduct(Product product) {
         this.product = product;
     }
@@ -41,11 +38,11 @@ public class OrderItemPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItemPK that = (OrderItemPK) o;
-        return Objects.equals(orderBuy, that.orderBuy) && Objects.equals(product, that.product);
+        return Objects.equals(order, that.order) && Objects.equals(product, that.product);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderBuy, product);
+        return Objects.hash(order, product);
     }
 }

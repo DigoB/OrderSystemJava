@@ -11,34 +11,37 @@ public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     private String street;
-    private String streetNumber;
+    private String number;
     private String complement;
-    private String neighborhood;
+    private String neighborhoor;
     private String zipCode;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "CUSTOMER_ID")
+    @JoinColumn(name="customer_id")
     private Customer customer;
+
     @ManyToOne
-    @JoinColumn(name = "CITY_ID")
+    @JoinColumn(name="city_id")
     private City city;
 
     public Address() {
     }
 
-    public Address(Integer id, String street, String streetNumber, String complement, String neighborhood, String zipCode, Customer customer, City city) {
+    public Address(Integer id, String street, String number, String complement, String neighborhood, String zipCode,
+                    Customer customer, City city) {
+        super();
         this.id = id;
         this.street = street;
-        this.streetNumber = streetNumber;
+        this.number = number;
         this.complement = complement;
-        this.neighborhood = neighborhood;
+        this.neighborhoor = neighborhood;
         this.zipCode = zipCode;
         this.customer = customer;
-        this.city = city;
+        this.setCity(city);
     }
 
     public Integer getId() {
@@ -57,12 +60,12 @@ public class Address implements Serializable {
         this.street = street;
     }
 
-    public String getStreetNumber() {
-        return streetNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getComplement() {
@@ -73,12 +76,12 @@ public class Address implements Serializable {
         this.complement = complement;
     }
 
-    public String getNeighborhood() {
-        return neighborhood;
+    public String getNeighborhoor() {
+        return neighborhoor;
     }
 
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
+    public void setNeighborhoor(String neighborhoor) {
+        this.neighborhoor = neighborhoor;
     }
 
     public String getZipCode() {
@@ -104,6 +107,7 @@ public class Address implements Serializable {
     public void setCity(City city) {
         this.city = city;
     }
+
 
     @Override
     public boolean equals(Object o) {

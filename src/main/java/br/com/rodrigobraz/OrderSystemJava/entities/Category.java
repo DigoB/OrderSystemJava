@@ -10,12 +10,13 @@ import java.util.Objects;
 @Entity
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy="categories")
     private List<Product> products = new ArrayList<>();
 
     public Category() {
@@ -35,11 +36,11 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
+    public String getNome() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setNome(String name) {
         this.name = name;
     }
 

@@ -1,6 +1,6 @@
 package br.com.rodrigobraz.OrderSystemJava.controllers;
 
-import br.com.rodrigobraz.OrderSystemJava.entities.OrderBuy;
+import br.com.rodrigobraz.OrderSystemJava.entities.PurchaseOrder;
 import br.com.rodrigobraz.OrderSystemJava.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +17,9 @@ public class OrderController {
     private OrderService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderBuy> getOrderById(@PathVariable Integer id) {
+    public ResponseEntity<PurchaseOrder> getOrderById(@PathVariable Integer id) {
 
-        OrderBuy order = service.getOrderById(id);
+        PurchaseOrder order = service.getOrderById(id);
 
         return ResponseEntity.ok().body(order);
 

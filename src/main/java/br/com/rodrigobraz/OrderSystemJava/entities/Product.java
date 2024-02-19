@@ -11,7 +11,7 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Double price;
@@ -20,30 +20,33 @@ public class Product implements Serializable {
     @ManyToMany
     @JoinTable(name = "PRODUCT_CATEGORY",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private List<Category> categories = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "id.product")
-    private Set<OrderItem> orderItems = new HashSet<>();
+    @OneToMany(mappedBy="id.product")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Product() {
     }
 
     public Product(Integer id, String name, Double price) {
+        super();
         this.id = id;
         this.name = name;
         this.price = price;
     }
 
     @JsonIgnore
-    public List<OrderBuy> getOrders() {
-        List<OrderBuy> list = new ArrayList<>();
-        for (OrderItem x : orderItems) {
-            list.add(x.getOrderBuy());
+    public List<PurchaseOrder> getOrders() {
+        List<PurchaseOrder> list = new ArrayList<>();
+        for (OrderItem x : items) {
+            list.add(x.getOrder());
         }
         return list;
     }
+
 
     public Integer getId() {
         return id;
@@ -77,12 +80,12 @@ public class Product implements Serializable {
         this.categories = categories;
     }
 
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setItems(Set<OrderItem> items) {
+        this.items = items;
     }
 
     @Override
