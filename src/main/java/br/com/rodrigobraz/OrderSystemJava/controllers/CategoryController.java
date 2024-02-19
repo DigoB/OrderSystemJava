@@ -1,9 +1,11 @@
 package br.com.rodrigobraz.OrderSystemJava.controllers;
 
 import br.com.rodrigobraz.OrderSystemJava.entities.Category;
+import br.com.rodrigobraz.OrderSystemJava.exceptions.DataIntegrityException;
 import br.com.rodrigobraz.OrderSystemJava.repositories.CategoryRepository;
 import br.com.rodrigobraz.OrderSystemJava.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -39,6 +41,14 @@ public class CategoryController {
     public ResponseEntity<Void> updateCategory(@RequestBody Category category, @PathVariable Integer id) {
         category.setId(id);
         category = categoryService.updateCategory(category);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
+
+        categoryService.deleteCategoryById(id);
+
         return ResponseEntity.noContent().build();
     }
 
