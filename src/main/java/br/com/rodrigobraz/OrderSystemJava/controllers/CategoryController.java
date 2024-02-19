@@ -1,5 +1,6 @@
 package br.com.rodrigobraz.OrderSystemJava.controllers;
 
+import br.com.rodrigobraz.OrderSystemJava.dto.CategoryDTO;
 import br.com.rodrigobraz.OrderSystemJava.entities.Category;
 import br.com.rodrigobraz.OrderSystemJava.exceptions.DataIntegrityException;
 import br.com.rodrigobraz.OrderSystemJava.repositories.CategoryRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/categories")
@@ -50,6 +52,13 @@ public class CategoryController {
         categoryService.deleteCategoryById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+        List<Category> categories = categoryService.findAll();
+        List<CategoryDTO> listDTO = categories.stream().map(CategoryDTO::new).toList();
+        return ResponseEntity.ok().body(listDTO);
     }
 
 }
