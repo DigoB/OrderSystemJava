@@ -39,7 +39,7 @@ public class Customer implements Serializable {
         this.name = name;
         this.email = email;
         this.document = document;
-        this.type = type.getCode();
+        this.type = (type == null) ? null : type.getCode();
     }
 
     public Integer getId() {
