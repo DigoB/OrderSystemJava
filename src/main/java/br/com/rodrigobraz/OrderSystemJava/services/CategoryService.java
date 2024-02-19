@@ -20,4 +20,10 @@ public class CategoryService {
                 "Category not found! Id: " + id + ", Type: " + Category.class.getName()));
     }
 
+    public Category createCategory(Category category) {
+        category.setId(null);
+        return repository.save(category);
+
+    }
+
 }

@@ -5,11 +5,10 @@ import br.com.rodrigobraz.OrderSystemJava.repositories.CategoryRepository;
 import br.com.rodrigobraz.OrderSystemJava.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +25,14 @@ public class CategoryController {
         Category category = categoryService.getCategoryById(id);
 
         return ResponseEntity.ok().body(category);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insertCategory(@RequestBody Category category) {
+        category = categoryService.createCategory(category);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(category.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
 }
