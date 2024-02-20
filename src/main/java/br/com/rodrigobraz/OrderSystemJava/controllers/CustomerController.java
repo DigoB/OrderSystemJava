@@ -1,8 +1,7 @@
 package br.com.rodrigobraz.OrderSystemJava.controllers;
 
-import br.com.rodrigobraz.OrderSystemJava.dto.CategoryDTO;
 import br.com.rodrigobraz.OrderSystemJava.dto.CustomerDTO;
-import br.com.rodrigobraz.OrderSystemJava.entities.Category;
+import br.com.rodrigobraz.OrderSystemJava.dto.CustomerInsertDTO;
 import br.com.rodrigobraz.OrderSystemJava.entities.Customer;
 import br.com.rodrigobraz.OrderSystemJava.services.CustomerService;
 import jakarta.validation.Valid;
@@ -10,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -61,5 +62,14 @@ public class CustomerController {
         Page<CustomerDTO> listDto = list.map(CustomerDTO::new);
 
         return ResponseEntity.ok().body(listDto);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insertCustomer(@Valid @RequestBody CustomerInsertDTO dto) {
+        Customer customer = service.fromDTO(dto);
+        customer = service.createcustomer(customer);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(customer.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
