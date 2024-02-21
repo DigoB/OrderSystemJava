@@ -1,7 +1,7 @@
 package br.com.rodrigobraz.OrderSystemJava.controllers;
 
-import br.com.rodrigobraz.OrderSystemJava.dto.CustomerDTO;
-import br.com.rodrigobraz.OrderSystemJava.dto.CustomerInsertDTO;
+import br.com.rodrigobraz.OrderSystemJava.entities.dto.CustomerDTO;
+import br.com.rodrigobraz.OrderSystemJava.entities.dto.CustomerInsertDTO;
 import br.com.rodrigobraz.OrderSystemJava.entities.Customer;
 import br.com.rodrigobraz.OrderSystemJava.services.CustomerService;
 import jakarta.validation.Valid;

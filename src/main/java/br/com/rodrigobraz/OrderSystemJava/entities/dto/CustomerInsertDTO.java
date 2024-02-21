@@ -1,19 +1,45 @@
-package br.com.rodrigobraz.OrderSystemJava.dto;
+package br.com.rodrigobraz.OrderSystemJava.entities.dto;
+
+import br.com.rodrigobraz.OrderSystemJava.entities.Customer;
+import br.com.rodrigobraz.OrderSystemJava.services.validators.CpfCnpj;
+import br.com.rodrigobraz.OrderSystemJava.services.validators.UniqueValue;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
+@CpfCnpj
 public class CustomerInsertDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @NotEmpty(message = "Mandatory filling")
+    @Length(min = 3, max = 80, message = "Lenght must have between 5 and 80 characters")
     private String name;
+
+    @Column(unique = true)
+    @NotEmpty(message = "Mandatory filling")
+    @Email(message = "Invalid email")
+    @UniqueValue(domainClass = Customer.class, fieldName = "email")
     private String email;
+
+    @NotEmpty(message = "Mandatory filling")
     private String document;
     private Integer type;
+
+    @NotEmpty(message = "Mandatory filling")
     private String street;
+
+    @NotEmpty(message = "Mandatory filling")
     private String number;
     private String complement;
     private String neighborhoor;
+
+    @NotEmpty(message = "Mandatory filling")
     private String zipCode;
+
+    @NotEmpty(message = "Mandatory filling")
     private String phone1;
     private String phone2;
     private String phone3;

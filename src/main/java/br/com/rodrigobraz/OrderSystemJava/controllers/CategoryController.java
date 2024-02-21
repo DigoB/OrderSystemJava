@@ -1,22 +1,17 @@
 package br.com.rodrigobraz.OrderSystemJava.controllers;
 
-import br.com.rodrigobraz.OrderSystemJava.dto.CategoryDTO;
+import br.com.rodrigobraz.OrderSystemJava.entities.dto.CategoryDTO;
 import br.com.rodrigobraz.OrderSystemJava.entities.Category;
-import br.com.rodrigobraz.OrderSystemJava.exceptions.DataIntegrityException;
-import br.com.rodrigobraz.OrderSystemJava.repositories.CategoryRepository;
 import br.com.rodrigobraz.OrderSystemJava.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/categories")

@@ -1,10 +1,9 @@
 package br.com.rodrigobraz.OrderSystemJava.services;
 
-import br.com.rodrigobraz.OrderSystemJava.dto.CustomerDTO;
-import br.com.rodrigobraz.OrderSystemJava.dto.CustomerInsertDTO;
+import br.com.rodrigobraz.OrderSystemJava.entities.dto.CustomerDTO;
+import br.com.rodrigobraz.OrderSystemJava.entities.dto.CustomerInsertDTO;
 import br.com.rodrigobraz.OrderSystemJava.entities.Address;
 import br.com.rodrigobraz.OrderSystemJava.entities.City;
-import br.com.rodrigobraz.OrderSystemJava.entities.Customer;
 import br.com.rodrigobraz.OrderSystemJava.entities.Customer;
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.CustomerType;
 import br.com.rodrigobraz.OrderSystemJava.exceptions.DataIntegrityException;
@@ -16,7 +15,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,7 +59,7 @@ public class CustomerService {
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Can not delete because there is related entities");
+            throw new DataIntegrityException("Can not delete because there is related orders");
         }
     }
 

@@ -1,6 +1,6 @@
 package br.com.rodrigobraz.OrderSystemJava.services;
 
-import br.com.rodrigobraz.OrderSystemJava.dto.CategoryDTO;
+import br.com.rodrigobraz.OrderSystemJava.entities.dto.CategoryDTO;
 import br.com.rodrigobraz.OrderSystemJava.entities.Category;
 import br.com.rodrigobraz.OrderSystemJava.exceptions.DataIntegrityException;
 import br.com.rodrigobraz.OrderSystemJava.exceptions.ObjectNotFoundException;
