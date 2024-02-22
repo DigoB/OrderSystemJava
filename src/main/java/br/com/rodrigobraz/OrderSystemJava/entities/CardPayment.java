@@ -1,9 +1,11 @@
 package br.com.rodrigobraz.OrderSystemJava.entities;
 
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.persistence.Entity;
 
 @Entity
+@JsonTypeName("cardPayment")
 public class CardPayment extends Payment {
     private static final long serialVersionUID = 1L;
 
