@@ -30,6 +30,9 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private CustomerService customerService;
+
     public PurchaseOrder getOrderById(Integer id) {
         Optional<PurchaseOrder> order = orderRepository.findById(id);
         return order.orElseThrow(() -> new ObjectNotFoundException(
@@ -40,6 +43,7 @@ public class OrderService {
     public PurchaseOrder insertOrder(PurchaseOrder purchaseOrder) {
         purchaseOrder.setId(null);
         purchaseOrder.setTimestamp(new Date());
+        purchaseOrder.setCustomer(customerService.getCustomerById(purchaseOrder.getCustomer().getId()));
         purchaseOrder.getPayment().setStatus(PaymentStatus.PENDING);
         purchaseOrder.getPayment().setOrder(purchaseOrder);
 
@@ -53,11 +57,13 @@ public class OrderService {
 
         for (OrderItem item : purchaseOrder.getItems()) {
             item.setDiscount(0.0);
-            item.setPrice(productService.getProductById(item.getProduct().getId()).getPrice());
+            item.setProduct(productService.getProductById(item.getProduct().getId()));
+            item.setPrice(item.getProduct().getPrice());
             item.setOrder(purchaseOrder);
         }
 
         orderItemRepository.saveAll(purchaseOrder.getItems());
+        System.out.println(purchaseOrder);
 
         return purchaseOrder;
     }
