@@ -3,8 +3,10 @@ package br.com.rodrigobraz.OrderSystemJava.services;
 import br.com.rodrigobraz.OrderSystemJava.entities.*;
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.CustomerType;
 import br.com.rodrigobraz.OrderSystemJava.entities.enums.PaymentStatus;
+import br.com.rodrigobraz.OrderSystemJava.entities.enums.Roles;
 import br.com.rodrigobraz.OrderSystemJava.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -40,6 +42,9 @@ public class DBService {
 
     @Autowired
     private OrderItemRepository itemRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public void instantiateTestDatabase() throws ParseException {
         Category cat1 = new Category(null, "Informática");
@@ -99,17 +104,34 @@ public class DBService {
         stateRepository.saveAll(Arrays.asList(est1, est2));
         cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Customer cli1 = new Customer(null, "Maria Silva", "testeenviodeemail6@gmail.com", "36378912377", CustomerType.NATURAL_PERSON);
-
+        Customer cli1 = new Customer(null,
+                "Maria Silva",
+                "testeenviodeemail6@gmail.com",
+                "36378912377",
+                CustomerType.NATURAL_PERSON,
+                encoder.encode("123"));
         cli1.getPhoneNumbers().addAll(Arrays.asList("27363323", "93838393"));
+
+        Customer cli2 = new Customer(null,
+                "Ana Costa",
+                "testeenviodeemail7@gmail.com",
+                "69393093067",
+                CustomerType.NATURAL_PERSON,
+                encoder.encode("1234"));
+        cli1.getPhoneNumbers().addAll(Arrays.asList("11111111111", "22222222222"));
+        cli2.addRole(Roles.ADMIN);
+
 
         Address e1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
         Address e2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+        Address e3 = new Address(null, "Avenida Floriano", "20106", null, "Centro", "38777055", cli2, c2);
+
 
         cli1.getAddresses().addAll(Arrays.asList(e1, e2));
+        cli2.getAddresses().addAll(Arrays.asList(e3));
 
-        customerRepository.saveAll(Arrays.asList(cli1));
-        addressRepository.saveAll(Arrays.asList(e1, e2));
+        customerRepository.saveAll(Arrays.asList(cli1, cli2));
+        addressRepository.saveAll(Arrays.asList(e1, e2, e3));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

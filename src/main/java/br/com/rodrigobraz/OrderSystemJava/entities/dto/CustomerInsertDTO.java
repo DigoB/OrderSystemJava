@@ -29,6 +29,9 @@ public class CustomerInsertDTO implements Serializable {
     private Integer type;
 
     @NotEmpty(message = "Mandatory filling")
+    private String password;
+
+    @NotEmpty(message = "Mandatory filling")
     private String street;
 
     @NotEmpty(message = "Mandatory filling")
@@ -77,6 +80,14 @@ public class CustomerInsertDTO implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getStreet() {
